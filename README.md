@@ -4,7 +4,11 @@
 
 ## Contexte
 
-✏️ *En cinq à huit phrases : qui utilise l'outil (son métier, son geste professionnel), son besoin, ce qu'il saisit, ce que le programme lui affiche, ce que l'outil ne fait pas.*
+Nous voulons faire un application en ligne de commande développée avec JavaScript et Node.js pour enregistrer les opérations maraîchèrs.
+Elle sera destinée aux maraîchers qui souhaiteront suivre les activités réalisées sur leurs parcelles. L'utilisateur sera en mesure d'enregistrer et de consulter,d'effectuer les recherche et de les trier les données.
+L'application permettra également de calculer le total des dépenses et de les regrouper par parcelle.
+Les coûts enregistrés correspondent aux dépenses engagées par les activités maraîchères. La rentabilité ne pourra pas calculé, car les revenus ne seront pas enregistrés. 
+
 
 ## Prérequis et lancement
 
@@ -23,7 +27,7 @@ Sous PowerShell, si `npm` est bloqué : `npm.cmd test`.
 
 ✏️ *Cochez seulement ce qui marche : `- [x]`.*
 
-- [ ] Données lues et enregistrées dans `donnees/operations.json`
+- [x] Données lues et enregistrées dans `donnees/operations.json`
 - [ ] Ajouter une opération, saisies invalides refusées sans arrêter le programme
 - [ ] Lister les opérations, message si le registre est vide
 - [ ] Rechercher par identifiant ou par parcelle ; filtrer par culture
