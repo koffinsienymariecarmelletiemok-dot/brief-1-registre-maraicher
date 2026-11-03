@@ -14,7 +14,14 @@ export function formaterOperation(operation) {
 // Renvoie un texte avec une opération par ligne (lignes séparées par '\n'),
 // ou 'Aucune opération enregistrée.' si la liste est vide.
 export function listerOperations(operations) {
- 
+ if(operations.length=== 0){
+    return "Aucune opération enregistrée."
+  }
+ const ligne =[];
+ for(const operation of operations){
+  ligne.push(formaterOperation(operation));
+ }
+ return ligne.join('\n');
 
 }
 
