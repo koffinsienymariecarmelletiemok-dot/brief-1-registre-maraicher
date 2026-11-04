@@ -28,7 +28,7 @@ export function listerOperations(operations) {
 // Renvoie l'opération qui a cet identifiant, ou undefined si elle n'existe pas.
 export function trouverParId(operations, id) {
  for(const operation of operations){
-if(operation.id == id){
+if(operation.id === id){
 return operation;}
 }
 return undefined
