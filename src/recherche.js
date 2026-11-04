@@ -3,8 +3,16 @@
 
 // Renvoie un NOUVEAU tableau avec les opérations de cette parcelle (éventuellement vide).
 export function filtrerParParcelle(operations, parcelle) {
-  throw new Error('TODO : coder filtrerParParcelle dans src/recherche.js');
+  const resultat = [];
+  for(const operation of operations){
+  if(operation.parcelle === parcelle){
+  resultat.push(operation)
+};
 }
+return resultat ;
+}
+
+
 
 // Renvoie un NOUVEAU tableau avec les opérations de cette culture (éventuellement vide).
 export function filtrerParCulture(operations, culture) {
