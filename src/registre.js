@@ -42,8 +42,32 @@ return undefined
 // obligatoires (n'importe quel texte non vide) · operation présente dans OPERATIONS
 // · coutFCFA nombre positif ou nul.
 export function verifierOperation(saisie, operations) {
-  throw new Error('TODO : coder verifierOperation dans src/registre.js');
+const erreurs = [];
+if(saisie.id === ''){
+erreurs.push('une identification est obligatoire');
+}else if(operations.find((operation) => operation.id === saisie.id) !== undefined){
+erreurs.push( ' ce identifiant est déjà pris.');}
+if( !estDateValide(saisie.date)){
+erreurs.push('la date doit être valide.');
+};
+if(saisie.parcelle === ''){
+erreurs.push('la parcelle est obligatoire');
+};
+if(saisie.culture === ''){
+erreurs.push('la parcelle est obligatoire');
+};
+if(!OPERATIONS.includes(saisie.operation)){
+erreurs.push("l' operation est invalide .")};
+
+const cout = versNombre(saisie.coutFCFA);
+if( Number.isNaN(cout) || cout < 0 ){
+erreurs.push('le coût doit être un nombre positif ou nul en (FCFA)');
+
 }
+
+return erreurs;
+}
+
 
 // Fabrique l'opération à enregistrer à partir d'une saisie VALIDE : coutFCFA devient un nombre.
 export function creerOperation(saisie) {
