@@ -48,7 +48,7 @@ erreurs.push('une identification est obligatoire');
 }else if(operations.find((operation) => operation.id === saisie.id) !== undefined){
 erreurs.push( ' ce identifiant est déjà pris.');}
 if( !estDateValide(saisie.date)){
-erreurs.push('la date doit être valide.');
+erreurs.push('format invalide (AAAA-MM-JJ)');
 };
 if(saisie.parcelle === ''){
 erreurs.push('la parcelle est obligatoire');
@@ -71,11 +71,25 @@ return erreurs;
 
 // Fabrique l'opération à enregistrer à partir d'une saisie VALIDE : coutFCFA devient un nombre.
 export function creerOperation(saisie) {
-  throw new Error('TODO : coder creerOperation dans src/registre.js');
+return {
+id: saisie.id,
+date : saisie.date,
+parcelle : saisie.parcelle,
+culture : saisie.culture,
+operation : saisie.operation,
+coutFCFA : versNombre(saisie.coutFCFA),
+};
 }
 
 // Ajoute la saisie au registre si elle est valide (verifierOperation, puis creerOperation).
 // Renvoie les erreurs : [] si l'opération a été ajoutée ; sinon les messages, et rien n'est ajouté.
 export function ajouterOperation(operations, saisie) {
-  throw new Error('TODO : coder ajouterOperation dans src/registre.js');
+const erreurs = verifierOperation(saisie , operations);
+if(erreurs.length > 0){
+return erreurs;
 }
+operations.push(creerOperation(saisie));
+return[];
+}
+
+
