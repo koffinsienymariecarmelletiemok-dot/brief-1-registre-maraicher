@@ -7,7 +7,7 @@ import { chargerJson, enregistrerJson } from './src/stockage.js';
 import { OPERATIONS, ajouterOperation, formaterOperation, listerOperations, trouverParId } from './src/registre.js';
 import { filtrerParCulture, filtrerParParcelle, trierParCout, trierParDate } from './src/recherche.js';
 import { coutMinMax, syntheseParParcelle, totalCouts } from './src/synthese.js';
-import { supprimerOperation, modifierOperation, trierParCoutDecroissant } from './src/bonus.js';
+import { supprimerOperation, modifierOperation, trierParCoutDecroissant, parcelleLaPlusCouteuse } from './src/bonus.js';
 const FICHIER_DONNEES = 'donnees/operations.json';
 function accueil(){
   console.log("========================================");
@@ -124,6 +124,7 @@ async function trier(operations){
   console.log('--- Trier ---');
   console.log("1. Par coût croissant" );
   console.log("2. Par date, de la plus ancienne à la plus récente ");
+  console.log("3. Par coût décroissant" );
   const sousChoix = await demander('Votre choix : ');
   if(sousChoix === null){
   return;
@@ -134,6 +135,9 @@ async function trier(operations){
     break;
     case '2': 
     console.log(listerOperations(trierParDate(operations)));
+    break;
+    case '3': 
+    console.log(listerOperations(trierParCoutDecroissant(operations)));
     break;
     default:
       console.log('Choix inconnu : retour au menu.');
@@ -156,6 +160,11 @@ function synthese(operations) {
   }else{
     console.log(`Coût minimum : ${bornes.min} FCFA · Coût maximum : ${bornes.max} FCFA`);
   }
+  const plusCouteuse =parcelleLaPlusCouteuse(operations);
+  if( plusCouteuse !== null){
+    console.log(`Parcelle la plus coûteuse : ${plusCouteuse.parcelle} (${plusCouteuse.total} FCFA)`);
+  }
+
   console.log('Rappel : ce sont des dépenses. Sans les revenus, elles ne mesurent pas la rentabilité.');
 }
 async function supprimer(operations) {
@@ -219,15 +228,6 @@ async function modifier(operations) {
   await enregistrerJson(FICHIER_DONNEES , operations);
   console.log(`Opération ${id} suprimé . Le registre compte ${operations.length} opérations.`)
   }
-
-
-
-
-
-
-
-
-
 
 async function main() {
   ouvrirSaisie();
