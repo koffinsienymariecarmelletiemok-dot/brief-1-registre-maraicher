@@ -24,6 +24,7 @@ function afficherMenu(){
   console.log("2. Afficher la liste des opérations");
   console.log("3. Rechercher (identifiant, parcelle, culture)");
   console.log("4. Trier (coût, date)");
+  console.log("5. Synthèse des dépenses ");
   console.log("0. Quitter");
   
 }
@@ -136,6 +137,24 @@ async function trier(operations){
   }
 }
 
+function synthese(operations) {
+  console.log('--- Synthèse des dépenses enregistrées ---');
+  console.log(`Nombre d'opérations : ${operations.length}` );
+  console.log(`Total des coûts : ${totalCouts(operations)} FCFA`);
+  console.log('Par parcelle :');
+  const bilan = syntheseParParcelle(operations);
+  for(const parcelle in bilan ){
+    console.log(`  ${parcelle} : ${bilan[parcelle].nombre} opération(s), ${bilan[parcelle].total} FCFA`);
+  }
+
+  const bornes = coutMinMax(operations);
+  if(bornes === null){
+    console.log('Coût minimum et maximum : aucune donnée');
+  }else{
+    console.log(`Coût minimum : ${bornes.min} FCFA · Coût maximum : ${bornes.max} FCFA`);
+  }
+  console.log('Rappel : ce sont des dépenses. Sans les revenus, elles ne mesurent pas la rentabilité.');
+}
 
 
 
@@ -172,6 +191,9 @@ async function main() {
           break;
           case '4':
             await trier(operations);
+          break;
+           case '5':
+            await synthese(operations);
           break;
           case '0':
             console.log(" Au revoir !");
