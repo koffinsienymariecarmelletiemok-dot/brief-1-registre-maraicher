@@ -17,11 +17,15 @@
 
 | Action | Attendu | Obtenu | Testeur |
 | --- | --- | --- | --- |
-| | | | |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
+| un ajout valide | |conforme |Ruth Tomede |
+| chaque règle refusée | | conforme| Ruth Tomede|
+| une recherche | |conforme| Ruth Tomede|
+| chaque tri | | conforme| Ruth Tomede|
+| la synthèse | |conforme |Ruth Tomede |
+| suppression| |Pas trop | Ruth Tomede|
 
-**Sur un autre poste** (`git clone`, `node app.js`, `npm test`, en suivant le README) : ✏️
+**Sur un autre poste** (`git clone`, `node app.js`, `npm test`, en suivant le README) : 
+npm test = 39 tests fonctionnent;
+node app.js = Ok;
+Ruth Tomede
+
