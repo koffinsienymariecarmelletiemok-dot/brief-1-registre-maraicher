@@ -1,6 +1,6 @@
 # Fiche individuelle
 
-> Une page, avant la livraison: Koffi N'sieny Marie Carmelle TIEMOKO, compte GitHub : 
+> Une page, avant la livraison: Koffi N'sieny Marie Carmelle TIEMOKO, compte GitHub : 'koffinsienymariecarmelletiemok-dot'
 
 1. **Une fonction que j'ai écrite**, et comment elle marche : la fonction que j'ai écrite est trierParCoutDecroissant dans bonus.js , il permet de trier les données de façon décroissante avec la methode sort().
 2. **Une difficulté, et sa solution** : je testais modifierOperation avec if(!resultat),alors que le tableau renvoie un tableau d'erreurs. J'ai stocké cela dans erreurs et testée avec erreues.length > 0 , puis affiché avec for...of.
