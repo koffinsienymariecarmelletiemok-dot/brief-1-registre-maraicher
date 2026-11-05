@@ -7,7 +7,7 @@ import { chargerJson, enregistrerJson } from './src/stockage.js';
 import { OPERATIONS, ajouterOperation, formaterOperation, listerOperations, trouverParId } from './src/registre.js';
 import { filtrerParCulture, filtrerParParcelle, trierParCout, trierParDate } from './src/recherche.js';
 import { coutMinMax, syntheseParParcelle, totalCouts } from './src/synthese.js';
-
+import { supprimerOperation, modifierOperation, trierParCoutDecroissant } from './src/bonus.js';
 const FICHIER_DONNEES = 'donnees/operations.json';
 function accueil(){
   console.log("========================================");
@@ -25,6 +25,8 @@ function afficherMenu(){
   console.log("3. Rechercher (identifiant, parcelle, culture)");
   console.log("4. Trier (coût, date)");
   console.log("5. Synthèse des dépenses ");
+  console.log("6. Supprimer une opération ");
+  console.log("7. Modifier une opération");
   console.log("0. Quitter");
   
 }
@@ -61,8 +63,9 @@ async function ajouter(operations) {
     console.log(`Opération ${saisie.id} ajoutée . Le registre compte ${operations.length} opérations.`)
   }else{
     console.log('Opération refusée :');
-    for (const erreur of erreurs)
+    for (const erreur of erreurs){
       console.log(`  - ${erreur}`);
+    }
   }
   console.log(`le registre compte toujours ${operations.length} opération. `);
 }
@@ -155,6 +158,74 @@ function synthese(operations) {
   }
   console.log('Rappel : ce sont des dépenses. Sans les revenus, elles ne mesurent pas la rentabilité.');
 }
+async function supprimer(operations) {
+  const id = await demander('Identifiant : ');
+  if(id === null){
+    return;
+  }
+  const operation= supprimerOperation(operations, id.toUpperCase());
+  if(operation === undefined){
+    console.log(`Opération ${id.toUpperCase()} introuvable.`)
+    return;
+  }
+  await enregistrerJson(FICHIER_DONNEES , operations);
+  console.log(`Opération ${id} ajoutée . Le registre compte ${operations.length} opérations.`)
+
+}
+
+async function modifier(operations) {
+  console.log('--- Modifier une Opération ---');
+  const id = await demander('Identifiant : ');
+  if(id === null){
+    return;
+  }
+  const champ = await demander('Champ à modifier ( date, parcelle, culture, operation, coutFCFA) : ');
+  if(champ === null){
+    return;
+  }
+  const valeur = await demander('Nouvelle valeur : ');
+  if(champ === null){
+    return;
+  }
+  const champsValides =['date', 'parcelle', 'culture', 'operation', 'coutFCFA'];
+  if(!champsValides.includes(champ)){
+    console.log('champ inconnu.');
+    return;
+  }
+  let nouvelle= valeur;
+  if(champ === 'coutFCFA'){
+    const nombre=Number(valeur);
+    if(Number.isNaN(nombre) || nombre < 0){
+      console.log('Coût invalide : il faut un nombre possitif ou nul.');
+      return;
+    }
+  }else if(champ === 'parcelle'){
+      nouvelle = valeur.toUpperCase();
+    }
+    else if(champ === 'culture' || champ === 'operation'){
+      nouvelle = valeur.toLowerCase();
+    }
+
+    const erreurs = modifierOperation(operations, id.toUpperCase(), champ, nouvelle);
+    if(erreurs.length > 0){
+      console.log('Modification refusée : ');
+      for (const erreur of erreurs){
+      console.log(`  - ${erreur}`);
+    }
+      return;
+    }
+
+
+  await enregistrerJson(FICHIER_DONNEES , operations);
+  console.log(`Opération ${id} suprimé . Le registre compte ${operations.length} opérations.`)
+  }
+
+
+
+
+
+
+
 
 
 
@@ -193,7 +264,13 @@ async function main() {
             await trier(operations);
           break;
            case '5':
-            await synthese(operations);
+            synthese(operations);
+          break;
+          case '6':
+            await supprimer(operations);
+          break;
+          case '7':
+            await modifier(operations);
           break;
           case '0':
             console.log(" Au revoir !");
