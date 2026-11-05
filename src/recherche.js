@@ -39,5 +39,9 @@ export function trierParCout(operations) {
 // Renvoie une COPIE triée par date, de la plus ancienne à la plus récente.
 // Deux opérations de même date gardent leur ordre d'origine. Le tableau reçu ne doit pas changer d'ordre.
 export function trierParDate(operations) {
-  throw new Error('TODO : coder trierParDate dans src/recherche.js');
+  const copie = [... operations];
+  copie.sort((a,b) => a.date.localeCompare(b.date));
+
+return copie;
+
 }
