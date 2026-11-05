@@ -11,7 +11,7 @@ import { coutMinMax, syntheseParParcelle, totalCouts } from './src/synthese.js';
 const FICHIER_DONNEES = 'donnees/operations.json';
 function accueil(){
   console.log("========================================");
-  console.log(" REGISTRE DES OPERATIONS MARAICHERES");
+  console.log(" REGISTRE DES OPÉRATIONS MARAICHÈRES");
   console.log(" Exploitation maraichère pédagogique");
   console.log("========================================");
 
@@ -22,6 +22,8 @@ function afficherMenu(){
   console.log("--------------- MENU -----------------");
   console.log("1. Ajouter une opération");
   console.log("2. Afficher la liste des opérations");
+  console.log("3. Rechercher (identifiant, parcelle, culture)");
+  console.log("4. Trier (coût, date)");
   console.log("0. Quitter");
   
 }
@@ -64,12 +66,77 @@ async function ajouter(operations) {
   console.log(`le registre compte toujours ${operations.length} opération. `);
 }
 
-
 function lister(operations){
   console.log(`--- liste des Opérations (${operations.length}) ---`);
   console.log(listerOperations(operations));
 
 }
+
+async function rechercher(operations){
+    
+  console.log('--- Rechercher ---');
+  console.log("1. Par identifiant" );
+  console.log("2. Par parcelle ");
+  console.log("3. Les opérations d'une culture ");
+  const sousChoix = await demander('Votre choix : ');
+  if(sousChoix === null){
+  return;
+  }
+
+  switch(sousChoix){
+	case '1': {
+    const id = await demander('Identifiant : ');
+    const operation = trouverParId(operations, id.toUpperCase());
+    if(operation !== undefined){
+      console.log(formaterOperation(operation));
+    } else{
+      console.log(`Opération ${id.toUpperCase()} introuvable.`);	
+	  }
+     break;
+  }
+	
+	case '2': {
+	const parcelle = await demander('Parcelle : ');
+	const liste = filtrerParParcelle(operations, parcelle.toUpperCase());
+	console.log(`${liste.length} operations dans la classe  ${parcelle.toUpperCase()} :`);
+	console.log(listerOperations(liste));
+	break;
+	}
+
+	case '3': {
+	const culture = await demander('Culture : ');
+	const liste = filtrerParCulture(operations, culture.toLowerCase());
+	console.log(`${liste.length} operations dans la classe  ${culture.toLowerCase()}`);
+	console.log(listerOperations(liste));
+	break;
+	}
+	default:
+	console.log('Choix inconnu : retour au menu.');
+
+ }
+}
+
+async function trier(operations){
+  console.log('--- Trier ---');
+  console.log("1. Par coût croissant" );
+  console.log("2. Par date, de la plus ancienne à la plus récente ");
+  const sousChoix = await demander('Votre choix : ');
+  if(sousChoix === null){
+  return;
+  }
+ switch(sousChoix){
+    case '1': 
+    console.log(listerOperations(trierParCout(operations)));
+    break;
+    case '2': 
+    console.log(listerOperations(trierParDate(operations)));
+    break;
+    default:
+      console.log('Choix inconnu : retour au menu.');
+  }
+}
+
+
 
 
 async function main() {
@@ -99,6 +166,12 @@ async function main() {
           break;
           case '2':
            lister(operations);
+          break;
+          case '3':
+            await rechercher(operations);
+          break;
+          case '4':
+            await trier(operations);
           break;
           case '0':
             console.log(" Au revoir !");
