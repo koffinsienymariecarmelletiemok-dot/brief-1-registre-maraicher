@@ -25,13 +25,43 @@ export function supprimerOperation(operations, id) {
 // Erreurs : identifiant introuvable · champ 'id' (non modifiable) · champ absent de CHAMPS_MODIFIABLES
 //           · valeur refusée par les règles de l'ajout.
 export function modifierOperation(operations, id, champ, valeur) {
-  throw new Error('TODO Bonus : coder modifierOperation dans src/bonus.js');
+  const operation = trouverParId(operations, id);
+  if (operation === undefined){
+    return[`L'opération ${id} introuvable .`];
+  }
+  if(champ === 'id'){
+    return["L'identifiant ne peut pas être modifié."];
+  }
+  if(!CHAMPS_MODIFIABLES.includes(champ)){
+    return[`Le champ ${champ} n'est pas être modifiable.`];
+  }
+  const saisie ={
+  id: operation.id,
+  date : operation.date,
+  parcelle : operation.parcelle,
+  culture : operation.culture,
+  operation : operation.operation,
+  coutFCFA : String(operation.coutFCFA),
+  [champ]: valeur
+  };
+  const autres = operations.filter((operation) => operation.id !== id);
+  const erreurs = verifierOperation(saisie , autres);
+  if(erreurs.length > 0){
+    return erreurs;
+  }
+  operation[champ] = champ === 'coutFCFA' ? versNombre(valeur):valeur;
+  return[];
+
 }
 
 // Renvoie une COPIE triée par coût décroissant : la plus chère d'abord.
 export function trierParCoutDecroissant(operations) {
-  throw new Error('TODO Bonus : coder trierParCoutDecroissant dans src/bonus.js');
+  const decroissant = [... operations];
+  decroissant.sort((a,b) => b.coutFCFA - a.coutFCFA);
+
+  return decroissant;
 }
+
 
 // Renvoie la parcelle dont le total des coûts est le plus élevé : { parcelle, total },
 // ou null si le registre est vide. En cas d'égalité : la première parcelle rencontrée.
