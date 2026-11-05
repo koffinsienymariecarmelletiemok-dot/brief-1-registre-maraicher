@@ -2,7 +2,8 @@
 
 > Une page, relue par le coach agronomie, d'après la fiche de référence. Vous décrivez des opérations ; vous ne donnez pas de conseil de culture. Les dates des données sont fictives.
 
-**Culture choisie**: Tomate et grandes étapes de son cycle : Semis - repiquage - Arrosage - Désherbage - Récolte
+**Culture choisie**: Tomate 
+grandes étapes de son cycle : Semis - repiquage - Arrosage - Désherbage - Récolte
 
 | Opération (identifiant) | Étape du cycle | Ce qu'on vérifie sur la parcelle à cette étape |
 | --- | --- | --- |
@@ -17,4 +18,4 @@
 
 Sources:. donnees/operation.json
 .la fiche pédagogique registre des operation maraîchères , compétence AG6N1
- · Relu par le coach le : ✏️
+ · Relu par le coach le : 

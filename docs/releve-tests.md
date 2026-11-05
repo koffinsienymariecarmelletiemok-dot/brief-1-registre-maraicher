@@ -17,12 +17,12 @@
 
 | Action | Attendu | Obtenu | Testeur |
 | --- | --- | --- | --- |
-| un ajout valide | |conforme |Ruth Tomede |
-| chaque règle refusée | | conforme| Ruth Tomede|
-| une recherche | |conforme| Ruth Tomede|
-| chaque tri | | conforme| Ruth Tomede|
-| la synthèse | |conforme |Ruth Tomede |
-| suppression| |Pas trop | Ruth Tomede|
+| un ajout valide |conforme |conforme |Ruth Tomede |
+| chaque règle refusée |conforme | conforme| Ruth Tomede|
+| une recherche |conforme |conforme| Ruth Tomede|
+| chaque tri |conforme | conforme| Ruth Tomede|
+| la synthèse |conforme |conforme |Ruth Tomede |
+| suppression|conforme|Pas trop | Ruth Tomede|
 
 **Sur un autre poste** (`git clone`, `node app.js`, `npm test`, en suivant le README) : 
 npm test = 39 tests fonctionnent;

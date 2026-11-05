@@ -178,7 +178,7 @@ async function supprimer(operations) {
     return;
   }
   await enregistrerJson(FICHIER_DONNEES , operations);
-  console.log(`Opération ${id} ajoutée . Le registre compte ${operations.length} opérations.`)
+  console.log(`Opération ${id} supprimée . Le registre compte ${operations.length} opérations.`)
 
 }
 
